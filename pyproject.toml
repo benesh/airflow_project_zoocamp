@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "airflow-project-zoocamp"
+version = "0.1.0"
+description = ""
+authors = ["Ben_Omar <bennessh@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.12"
+apache-airflow = "^2.8.1"
+minio = "^7.2.3"
+requests = "^2.31.0"
+selenium = "^4.17.2"
+selenium-page-factory = "^2.6"
+psycopg2-binary = "^2.9.9"
+SQLAlchemy="^2.0.25"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
