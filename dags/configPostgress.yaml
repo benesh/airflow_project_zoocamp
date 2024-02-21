@@ -1,6 +1,6 @@
 - config_name : "BDPostgress"
   user : "admin"
   password : "admin123"
-  hostname : "postgres-app"
+  hostname : "postgres-app" #"postgres-app"
   port : "5432"
   database : "project_airflow"
