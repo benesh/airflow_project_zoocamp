@@ -3,3 +3,10 @@ selenium
 selenium-page-factory
 psycopg2-binary
 pydantic
+apache-airflow-providers-postgres
+minio
+pandas
+SQLAlchemy==2.0.25
+
+
+

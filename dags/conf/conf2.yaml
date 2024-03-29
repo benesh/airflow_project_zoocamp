@@ -1,0 +1,15 @@
+- postgres_db_user :
+    config_name : "user_normal"
+    user : "admin"
+    password : "admin123"
+    hostname : "postgres-app" #"postgres-app"
+    port : "5432"
+    database : "project_airflow"
+
+- postgres_db_user_admin :
+    config_name: "user_normal"
+    user : "admin"
+    password : "admin123"
+    hostname : "postgres-app" #"postgres-app"
+    port : "5432"
+    database : "project_airflow"
