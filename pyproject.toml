@@ -2,19 +2,27 @@
 name = "airflow-project-zoocamp"
 version = "0.1.0"
 description = ""
-authors = ["Ben_Omar <bennessh@gmail.com>"]
+authors = ["ben"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = ">=3.10,<3.12"
-apache-airflow = "^2.8.1"
-minio = "^7.2.3"
+python = ">=3.12,<3.13"
+pandas = "^2.2.1"
+minio = "^7.2.5"
 requests = "^2.31.0"
-selenium = "^4.17.2"
+selenium = "^4.19.0"
 selenium-page-factory = "^2.6"
 psycopg2-binary = "^2.9.9"
-SQLAlchemy="^2.0.25"
+apache-airflow-providers-postgres = "^5.10.2"
+pydantic = "^2.6.4"
+pyyaml = "^6.0.1"
+dataclasses-json = "^0.6.4"
 
+
+[tool.poetry.group.test.dependencies]
+apache-airflow = "^2.9.0b2"
+jupyter = "^1.0.0"
+lab = "^8.1"
 
 [build-system]
 requires = ["poetry-core"]

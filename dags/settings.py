@@ -1,0 +1,7 @@
+POSTGRES_MINIO_FILE='dags/conf/conf2.yaml'
+POSTGRES='postgres'
+MINIO = 'minio'
+FORMAT_JSON = 'json'
+FORMAT_YAML = 'yaml'
+POSTGRES_ATTRIBUT='postgres_db_user'
+URL_DATA_DYKE='https://s3.amazonaws.com/tripdata/index.html'

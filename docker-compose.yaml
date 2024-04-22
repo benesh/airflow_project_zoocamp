@@ -305,7 +305,6 @@ services:
       - airflow_network
     profiles: [ "browser" ]
 
-
   selenium-hub:
     image: selenium/hub:4.15.0-20231129
     container_name: selenium-hub
@@ -317,6 +316,28 @@ services:
       - airflow_network
     profiles: [ "browser" ]
 
+  service-jupyter:
+    image: jupyter/base-notebook
+    container_name: jupyter-test
+    ports:
+      - 8888:8888
+    networks:
+      - airflow_network
+    volumes:
+      - "./volume/:/home/work"
+    profiles: ["notebook"]
+
+  test:
+    image: nvidia/cuda:12.3.1-base-ubuntu20.04
+    command: nvidia-smi
+    profiles: ["nvedia"]
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [ gpu ]
 
 volumes:
   postgres-db-volume:
