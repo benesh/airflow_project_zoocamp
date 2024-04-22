@@ -3,4 +3,4 @@
 volume/*
 logs/*
 .idea/*
-config
+dags/conf/*
