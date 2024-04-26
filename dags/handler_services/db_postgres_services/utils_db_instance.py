@@ -8,3 +8,4 @@ class ConfigPostgres(BaseModel):
     hostname:str
     port : str
     database:str
+

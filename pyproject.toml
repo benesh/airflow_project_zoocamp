@@ -17,6 +17,7 @@ apache-airflow-providers-postgres = "^5.10.2"
 pydantic = "^2.6.4"
 pyyaml = "^6.0.1"
 dataclasses-json = "^0.6.4"
+pytest-shutil = "^1.7.0"
 
 
 [tool.poetry.group.test.dependencies]

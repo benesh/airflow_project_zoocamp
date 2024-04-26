@@ -8,20 +8,19 @@ from airflow import DAG
 from airflow.operators.python import PythonOperator
 from handler_services.webparser_services.webparser_services import  WebDriverSetup, BykeDataPage
 from handler_services.db_postgres_services.dbinstance import DBInstance
-from handler_services.reader_config import FactoryConfig,FactoryReaderFile
+from handler_services.reader_config import FactoryReaderConfig,FactoryReaderFile
 from settings import POSTGRES_MINIO_FILE,POSTGRES_ATTRIBUT,URL_DATA_DYKE
-from handler_services.data_file_info import DataBykeUrlsClass
+from handler_services.data_byke_services.data_file_info import DataBykeUrlsClass
 from handler_services.db_postgres_services.steps import StepsGetAllUrlDataByke,StepsInsertBykeUrls
-from handler_services.utils_byke_data import filter_links
-
+from handler_services.data_byke_services.utils_byke_data import filter_links
 
 default_args={"owner": "benesh",
-              'retries':3,
+              'retries':2,
               'retry_delay':timedelta(minutes=2)
               }
 
 def task_init_db():
-    db_instance = DBInstance(reader_config=FactoryConfig.CONFIG_POSTGRES,
+    db_instance = DBInstance(reader_config=FactoryReaderConfig.CONFIG_POSTGRES,
                              reader_file=FactoryReaderFile.YAML,
                              path_config=POSTGRES_MINIO_FILE,
                              attribut=POSTGRES_ATTRIBUT)
@@ -47,7 +46,7 @@ def get_links_from_web(ti):
     # print(links)
 
 def get_urls_from_db(ti):
-    db_instance = DBInstance(reader_config=FactoryConfig.CONFIG_POSTGRES,
+    db_instance = DBInstance(reader_config=FactoryReaderConfig.CONFIG_POSTGRES,
                              reader_file=FactoryReaderFile.YAML,
                              path_config=POSTGRES_MINIO_FILE,
                              attribut=POSTGRES_ATTRIBUT)
@@ -81,18 +80,17 @@ def insert_url_to_db(ti):
     else:
         urls_2 = [DataBykeUrlsClass.parse_obj(json.loads(link)) for link in urls_1[0]]
         data_to_db = [url_one.get_db() for url_one in urls_2]
-
-        db_instance = DBInstance(reader_config=FactoryConfig.CONFIG_POSTGRES,
+        print(data_to_db)
+        db_instance = DBInstance(reader_config=FactoryReaderConfig.CONFIG_POSTGRES,
                                  reader_file=FactoryReaderFile.YAML,
                                  path_config=POSTGRES_MINIO_FILE,
                                  attribut=POSTGRES_ATTRIBUT)
-
         engine = db_instance.engine
         insert_data = StepsInsertBykeUrls(engine,data_to_db)
         insert_data.run()
 
 with DAG(
-    dag_id='listing_data_files_v28',
+    dag_id='listing_data_files_v29',
     default_args=default_args,
     start_date=datetime(2024, 2, 1),
     schedule_interval=timedelta(hours=1),

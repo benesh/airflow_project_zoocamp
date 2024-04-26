@@ -1,12 +1,10 @@
-import sys
-sys.path.append('/opt/airflow/dags')
-from abc import ABC
 
+from abc import ABC
 import yaml
 from enum import Enum
 from pydantic import ValidationError
 from handler_services.db_postgres_services.utils_db_instance import ConfigPostgres
-from handler_services.storage_services.minio_services import MinioCredential
+from handler_services.storage_services.config_storage import MinioCredential
 from yaml import safe_load
 import json
 from typing import Optional
@@ -30,7 +28,7 @@ class ReaderFile(ABC):
 class ReaderJsonFile(ReaderFile):
     def read_file(self,path:str) -> dict:
         self.open_file(path)
-        json_conf = json.load(self.file_opened.read() )
+        json_conf = json.load(self.file_opened.read())
         self.__exit__()
         return json_conf
 class ReaderYamlFile(ReaderFile):
@@ -78,10 +76,9 @@ class ReaderConfigPostgress(ReaderConfig):
             return conf_postgres
         except ValidationError as e:
             print(f"Error parsing JSON: {e}")
-class FactoryConfig(Enum):
+class FactoryReaderConfig(Enum):
     CONFIG_POSTGRES="postgres"
     CONFIG_MINIO="minio"
-
     @property
     def config(self) -> ReaderConfig:
         return {
@@ -89,7 +86,7 @@ class FactoryConfig(Enum):
             self.CONFIG_MINIO:ReaderConfigMinio()
         }[self]
 
-def runner_read_config(reader_config:FactoryConfig,reader_file:FactoryReaderFile,path_config:str, attribut :Optional[str]=None):
+def runner_read_config(reader_config:FactoryReaderConfig, reader_file:FactoryReaderFile, path_config:str, attribut :Optional[str]=None):
     reader = reader_config.config
     conf = reader.read_config(path_config,reader_file,attribut)
     return conf

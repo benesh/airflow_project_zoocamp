@@ -1,12 +1,8 @@
 import sys
 sys.path.append('/opt/airflow/dags')
-
-from pydantic.dataclasses import dataclass
-from pydantic import BaseModel
 from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
-from handler_services.reader_config import runner_read_config ,FactoryConfig , FactoryReaderFile
+from handler_services.reader_config import runner_read_config ,FactoryReaderConfig , FactoryReaderFile
 from handler_services.db_postgres_services.utils_db_instance import ConfigPostgres
 from typing import Optional
 
@@ -14,7 +10,7 @@ from typing import Optional
 Base = declarative_base()
 
 class DBInstance:
-    def __init__(self,reader_config:FactoryConfig,reader_file : FactoryReaderFile,path_config,attribut:Optional[str]):
+    def __init__(self, reader_config:FactoryReaderConfig, reader_file : FactoryReaderFile, path_config, attribut:Optional[str]):
         self._config :ConfigPostgres = None
         self._engine =None
         self.path_config = path_config

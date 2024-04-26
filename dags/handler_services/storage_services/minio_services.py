@@ -1,21 +1,28 @@
 from minio import Minio
-from pydantic import BaseModel
 import requests
-# from handler_services.data_file_info import DataBykeUrlsClass
+from handler_services.reader_config import runner_read_config,FactoryReaderConfig,FactoryReaderFile
+from handler_services.storage_services.config_storage import MinioCredential
 
-class MinioCredential(BaseModel):
-    url:str
-    accessKey:str
-    secretKey:str
-    api: str
-    path: str
-    host:str = None
+
+class MinioServices:
+    def __init__(self, reader_config:FactoryReaderConfig, reader_file:FactoryReaderFile, path_config:str, attrubute_config:str):
+        self.reader_config: FactoryReaderConfig = reader_config
+        self.reader_file: FactoryReaderFile = reader_file
+        self.path_config: str = path_config
+        self.attribute_config = attrubute_config
+        self._minio_credentials : MinioCredential = None
 
     def get_minio_client(self)-> Minio:
-        return Minio(endpoint=self.host,
-                     access_key=self.accesskey,
-                     secret_key=self.secretkey,
-                     secure=False)
+        return self.minio_credential.get_minio_client()
+    @property
+    def minio_credential(self):
+        if self._minio_credentials is None:
+            self._minio_credentials = runner_read_config(reader_config=self.reader_config,
+                                                         reader_file=self.reader_file,
+                                                         path_config=self.path_config,
+                                                         attribut=self.attribute_config)
+        return self._minio_credentials
+
 
 # def wondload_data_file_into_cloud(minio_client : Minio,file_data: DataBykeUrlsClass, bucket_name : str,bucket_path:str):
 #     response_head = requests.head(file_data.url)
@@ -25,7 +32,6 @@ class MinioCredential(BaseModel):
 #         response.raise_for_status()
 #         # Upload the file-like object directly
 #         minio_client.put_object(bucket_name, file_data.file_name, response.raw, length=file_size)
-
 
 # if __name__ == "__main__":
 #     client = Minio('127.0.0.1:9000', 'cjQ0eMWujedmdqAFcpss', 'twWetAXmR4USG91alyMPDy5pZFQk613j0JAxJxX2', secure=False)

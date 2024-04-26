@@ -257,7 +257,7 @@ services:
 
   postgres-app:
     container_name: postgres-app
-    image: postgres:13
+    image: postgres:16-alpine
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin123
