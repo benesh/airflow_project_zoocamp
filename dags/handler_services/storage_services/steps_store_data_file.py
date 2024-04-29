@@ -5,8 +5,6 @@ from handler_services.data_byke_services.data_file_info import DataBykeUrlsClass
 import requests
 from abc import ABC
 
-
-
 class StepsDataSinkFileFromWeb:
     def __init__(self, data_bykes:[DataBykeUrlsClass], minio_credential:MinioCredential, bucket_name:str, path:Optional[str]):
         self.data_bykes_list = data_bykes
@@ -43,7 +41,7 @@ class DataBykeUrlStorageServices(ABC):
     def run(self, data_bykes:[DataBykeUrlsClass], config:dict):
         raise NotImplementedError
 
-class StepGetDataFromMinio_s3(DataBykeUrlStorageServices):
+class StepGetDataFromMinioS3(DataBykeUrlStorageServices):
     def run(self,data_byke :DataBykeUrlsClass, config:dict):
         minio_credential:MinioCredential = config.get["minio_credential"]
         bucket_name:str = config["bucket_name"]

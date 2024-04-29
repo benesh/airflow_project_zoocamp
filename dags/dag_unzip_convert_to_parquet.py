@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from airflow.decorators import dag, task
-
+from settings import WORKDIR_DATA
 
 
 default_args = {
@@ -22,7 +22,6 @@ def unzip_data_file():
             'first_name': 'Jerry',
             'last_name': 'Fridman'
         }
-
     @task()
     def data_unzipping_convert_to_parquet():
         return 19
