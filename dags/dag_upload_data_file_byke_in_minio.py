@@ -9,7 +9,7 @@ from handler_services.storage_services.steps_store_data_file import StepsDataSin
 from handler_services.db_postgres_services.dbinstance import DBInstance
 from handler_services.db_postgres_services.steps import StepsGetAllUrlDataBykeClassWithStatus
 from handler_services.data_byke_services.config_class import StatusFile
-from handler_services.data_byke_services.data_file_info import DataBykeUrlsClass
+from handler_services.data_byke_services.data_file_info import DataBikeUrlsClass
 from handler_services.db_postgres_services.steps import StepsUpdateStatusDataUrls
 
 
@@ -44,7 +44,7 @@ def dag_updaload_file_to_s3():
         :return: list result of the upload url
         """
         if len(list_urls) > 0 :
-            list_convert = [DataBykeUrlsClass.parse_obj(json.loads(url_json)) for url_json in list_urls]
+            list_convert = [DataBikeUrlsClass.parse_obj(json.loads(url_json)) for url_json in list_urls]
             print(list_convert)
             s3_minio = MinioServices(reader_config=FactoryReaderConfig.CONFIG_MINIO,
                                      reader_file=FactoryReaderFile.YAML,
@@ -65,7 +65,7 @@ def dag_updaload_file_to_s3():
     @task()
     def insert_meta_data_to_db(list_json):
         if len(list_json) > 0 :
-            list_convert = [DataBykeUrlsClass.parse_obj(json.loads(url_json)) for url_json in list_json]
+            list_convert = [DataBikeUrlsClass.parse_obj(json.loads(url_json)) for url_json in list_json]
             lis_url_db = [data_url.get_db() for data_url in list_convert]
             step_update = StepsUpdateStatusDataUrls()
             db_instance = DBInstance(reader_config=FactoryReaderConfig.CONFIG_POSTGRES,

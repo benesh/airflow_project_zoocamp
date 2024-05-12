@@ -1,12 +1,12 @@
 import logging
 from typing import Optional
 from handler_services.storage_services.config_storage import MinioCredential
-from handler_services.data_byke_services.data_file_info import DataBykeUrlsClass,StatusFile
+from handler_services.data_byke_services.data_file_info import DataBikeUrlsClass,StatusFile
 import requests
 from abc import ABC
 
 class StepsDataSinkFileFromWeb:
-    def __init__(self, data_bykes:[DataBykeUrlsClass], minio_credential:MinioCredential, bucket_name:str, path:Optional[str]):
+    def __init__(self, data_bykes:[DataBikeUrlsClass], minio_credential:MinioCredential, bucket_name:str, path:Optional[str]):
         self.data_bykes_list = data_bykes
         self.minio_creds = minio_credential
         self.bucket_name = bucket_name
@@ -19,7 +19,7 @@ class StepsDataSinkFileFromWeb:
         except Exception as e:
             logging.error(f"Unexpected Error in Uploading File: {e}")
         return list_result_data_sink
-    def run_upload_on_data(self,data_byke:DataBykeUrlsClass):
+    def run_upload_on_data(self, data_byke:DataBikeUrlsClass):
         try :
             response_head = requests.head(data_byke.url)
             file_size = int(response_head.headers.get('Content-Length', 0))
@@ -38,11 +38,11 @@ class StepsDataSinkFileFromWeb:
 
 
 class DataBykeUrlStorageServices(ABC):
-    def run(self, data_bykes:[DataBykeUrlsClass], config:dict):
+    def run(self, data_bykes:[DataBikeUrlsClass], config:dict):
         raise NotImplementedError
 
 class StepGetDataFromMinioS3(DataBykeUrlStorageServices):
-    def run(self,data_byke :DataBykeUrlsClass, config:dict):
+    def run(self, data_byke :DataBikeUrlsClass, config:dict):
         minio_credential:MinioCredential = config.get["minio_credential"]
         bucket_name:str = config["bucket_name"]
         path:str = config["path"]

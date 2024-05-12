@@ -2,6 +2,14 @@ from datetime import datetime, timedelta
 from airflow.decorators import dag, task
 from settings import WORKDIR_DATA
 
+"""
+attribute to input the de data in the dictionary
+dir_to_rm
+path_file
+path_extrac_file
+
+"""
+
 
 default_args = {
     'owner': 'benesh',
@@ -18,10 +26,8 @@ default_args = {
 def unzip_data_file():
     @task(multiple_outputs=True)
     def get_list_from_db():
-        return {
-            'first_name': 'Jerry',
-            'last_name': 'Fridman'
-        }
+        ...
+
     @task()
     def data_unzipping_convert_to_parquet():
         return 19

@@ -20,7 +20,7 @@ def get_current_time():
     return datetime.now()
 
 def get_month(file_name:str) -> str:
-    month = str(int(file_name[:6])) if file_name[:6].isdigit() else None
+    month = str(int(file_name[4:6])) if file_name[:6].isdigit() else None
     return month
 def get_year(file_name:str) -> str:
     year = str(int(file_name[:4])) if file_name[:4].isdigit() else None

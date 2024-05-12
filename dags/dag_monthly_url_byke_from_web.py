@@ -10,9 +10,9 @@ from handler_services.webparser_services.webparser_services import  WebDriverSet
 from handler_services.db_postgres_services.dbinstance import DBInstance
 from handler_services.reader_config import FactoryReaderConfig,FactoryReaderFile
 from settings import POSTGRES_MINIO_FILE,POSTGRES_ATTRIBUT,URL_DATA_DYKE
-from handler_services.data_byke_services.data_file_info import DataBykeUrlsClass
+from handler_services.data_byke_services.data_file_info import DataBikeUrlsClass
 from handler_services.db_postgres_services.steps import StepsGetAllUrlDataByke,StepsInsertBykeUrls
-from handler_services.data_byke_services.utils_byke_data import filter_links
+from handler_services.data_byke_services.utils_bike_data import filter_links
 
 default_args={"owner": "benesh",
               'retries':2,
@@ -59,10 +59,10 @@ def get_urls_from_db(ti):
 def sort_links(ti):
     links_from_web = ti.xcom_pull(key='links_from_web', task_ids=['get_links_from_web'])
     links_from_db = ti.xcom_pull(key='links_from_db', task_ids=['get_urls_from_db'])
-    from_db = [ DataBykeUrlsClass.parse_obj(json.loads(link)) for link in links_from_db[0]]
+    from_db = [DataBikeUrlsClass.parse_obj(json.loads(link)) for link in links_from_db[0]]
     print(links_from_web)
     print(links_from_db)
-    from_web = [ DataBykeUrlsClass.parse_obj(json.loads(link)) for link in links_from_web[0]]
+    from_web = [DataBikeUrlsClass.parse_obj(json.loads(link)) for link in links_from_web[0]]
     links = filter_links(from_web, from_db)
     if links is not None:
         links_json = [url.model_dump_json() for url in links]
@@ -78,7 +78,7 @@ def insert_url_to_db(ti):
     if urls_1[0] == "stop_dag":
         logging.info('All URLs have been stored in databas')
     else:
-        urls_2 = [DataBykeUrlsClass.parse_obj(json.loads(link)) for link in urls_1[0]]
+        urls_2 = [DataBikeUrlsClass.parse_obj(json.loads(link)) for link in urls_1[0]]
         data_to_db = [url_one.get_db() for url_one in urls_2]
         print(data_to_db)
         db_instance = DBInstance(reader_config=FactoryReaderConfig.CONFIG_POSTGRES,

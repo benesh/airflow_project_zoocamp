@@ -2,7 +2,7 @@ from sqlalchemy import Column , Integer, String,DateTime
 from handler_services.db_postgres_services.dbinstance import Base
 
 
-class DataBykeUrlsDB(Base):
+class DataBikeUrlsDB(Base):
     __tablename__ = 'data_byke_urls_v4'
     id = Column (Integer, primary_key=True, autoincrement=True)
     file_name = Column (String(100))

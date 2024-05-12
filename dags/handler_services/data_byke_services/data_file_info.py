@@ -1,11 +1,11 @@
 from datetime import datetime
 from typing import Optional
 from pydantic import BaseModel
-from handler_services.db_postgres_services.models import DataBykeUrlsDB
+from handler_services.db_postgres_services.models import DataBikeUrlsDB
 from handler_services.data_byke_services.config_class import StatusFile
-from handler_services.data_byke_services.utils_byke_data import get_current_time,get_year,get_month
+from handler_services.data_byke_services.utils_bike_data import get_current_time,get_year,get_month
 
-class DataBykeUrlsClass(BaseModel):
+class DataBikeUrlsClass(BaseModel):
     file_name:str
     url:str
     month:Optional[str] = None
@@ -16,8 +16,8 @@ class DataBykeUrlsClass(BaseModel):
     id:Optional[int] = None
 
     @classmethod
-    def from_database(cls,data_byke_url:DataBykeUrlsDB):
-        return DataBykeUrlsClass(file_name=data_byke_url.file_name,
+    def from_database(cls, data_byke_url:DataBikeUrlsDB):
+        return DataBikeUrlsClass(file_name=data_byke_url.file_name,
                                  url=data_byke_url.url,
                                  month=data_byke_url.month,
                                  year=data_byke_url.year,
@@ -27,15 +27,15 @@ class DataBykeUrlsClass(BaseModel):
                                  id=data_byke_url.id)
     @classmethod
     def from_tuple_link_file_name(cls,link:str,file_name:str):
-        return DataBykeUrlsClass(file_name=file_name,
+        return DataBikeUrlsClass(file_name=file_name,
                                  url=link,
                                  month=get_month(file_name),
                                  year=get_year(file_name),
                                  status=StatusFile('CREATED'),
                                  created_at=get_current_time(),
-                                 updated_at=get_current_time() )
+                                 updated_at=get_current_time())
     def get_db(self):
-        return DataBykeUrlsDB(
+        return DataBikeUrlsDB(
             file_name=self.file_name,
             url=self.url,
             month=self.month,
