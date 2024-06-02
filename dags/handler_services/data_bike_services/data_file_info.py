@@ -2,8 +2,8 @@ from datetime import datetime
 from typing import Optional
 from pydantic import BaseModel
 from handler_services.db_postgres_services.models import DataBikeUrlsDB
-from handler_services.data_byke_services.config_class import StatusFile
-from handler_services.data_byke_services.utils_bike_data import get_current_time,get_year,get_month
+from handler_services.data_bike_services.config_class import StatusFile
+from handler_services.data_bike_services.utils_bike_data import get_current_time,get_year,get_month
 
 class DataBikeUrlsClass(BaseModel):
     file_name:str

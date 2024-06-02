@@ -1,7 +1,7 @@
 from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from handler_services.data_byke_services.data_file_info import DataBikeUrlsClass
+from handler_services.data_bike_services.data_file_info import DataBikeUrlsClass
 
 class WebDriverSetup:
     def __init__(self,headless=False):

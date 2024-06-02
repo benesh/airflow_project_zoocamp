@@ -6,24 +6,33 @@ FORMAT_YAML = 'yaml'
 POSTGRES_ATTRIBUT='postgres_db_user'
 MINIO_ATTRIBUT='minio_S3'
 URL_DATA_DYKE='https://s3.amazonaws.com/tripdata/index.html'
-BUCKET_DATA_BYKE_ARCHIVE = 'data-file-byke-nc-arhive'
+BUCKET_DATA_BIKE_ARCHIVE = 'data-file-byke-nc-arhive'
 DIRECTORY_DATA_BYKE_REPORT= '/report'
 DIRECTORY_DATA_BYKE_RAW= '/raw'
-BUCKET_DATA_BYKE= 'data-byke-nc'
+BUCKET_DATA_BIKE_RAW= 'data-bike-raw'
 WORKDIR_DATA='/home/airflow/workdir'
-ARCHIVES_FILES = 'archives'
-UNPACK_FILES ='unpack_files'
+FOLDER_ARCHIVES_FILES = 'archives'
+FOLDER_UNPACKED_FILES = 'unpack_files'
 
 """
--------list attribute 
+-------list attribute for config dict
 """
 
 key_column_renanme= 'col_rename'
 key_col_to_datetime= 'col_datetime'
 key_path_to_file='path_to_file'
 key_path_to_extract = 'path_to_extract'
-
-
+key_path_to_archive = 'path_to_archive'
+key_path_to_dest = 'path_to_archive'
+key_minio_credential= 'minio_credentials'
+key_bucket_name='bucket_name'
+key_path_file = 'path_file'
+key_column_to_drop ='col_to_drop'
+key_column_to_string='col_to_string'
+key_column_gender='gender'
+key_column_rideable_type= 'bike_type'
+key_column_member = 'member'
+key_path ='path'
 """
 ------- list dict for renaming column
 """
@@ -53,16 +62,15 @@ dict_column_to_rename={
                         'start_lng':'START_STATION_LONGITUDE',
                         'end_lat':'END_STATION_LATITUDE',
                         'end_lng':'END_STATION_LONGITUDE',
-                        'member_casual':'USER_TYPE'
+                        'member_casual':'USER_TYPE',
+                        'gender':'GENDER'
                        }
-
 """
 list of column 
 """
-
-list_column_to_remove=['ride_id','gender']
+list_column_to_remove=['ride_id','birth year']
 columns_to_datetime=['START_AT','STOP_AT']
-
+column_to_string=['START_STATION_ID','END_STATION_ID']
 
 """
 list of folder to remove

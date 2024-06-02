@@ -86,7 +86,10 @@ class FactoryReaderConfig(Enum):
             self.CONFIG_MINIO:ReaderConfigMinio()
         }[self]
 
-def runner_read_config(reader_config:FactoryReaderConfig, reader_file:FactoryReaderFile, path_config:str, attribut :Optional[str]=None):
+def runner_read_config(reader_config:FactoryReaderConfig,
+                       reader_file:FactoryReaderFile,
+                       path_config:str,
+                       attribut: Optional[str]=None):
     reader = reader_config.config
     conf = reader.read_config(path_config,reader_file,attribut)
     return conf

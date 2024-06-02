@@ -18,6 +18,8 @@ pydantic = "^2.6.4"
 pyyaml = "^6.0.1"
 dataclasses-json = "^0.6.4"
 pytest-shutil = "^1.7.0"
+fastparquet = "^2024.5.0"
+pyarrow = "^16.1.0"
 
 
 [tool.poetry.group.test.dependencies]

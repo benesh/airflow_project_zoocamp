@@ -10,9 +10,9 @@ from handler_services.webparser_services.webparser_services import  WebDriverSet
 from handler_services.db_postgres_services.dbinstance import DBInstance
 from handler_services.reader_config import FactoryReaderConfig,FactoryReaderFile
 from settings import POSTGRES_MINIO_FILE,POSTGRES_ATTRIBUT,URL_DATA_DYKE
-from handler_services.data_byke_services.data_file_info import DataBikeUrlsClass
-from handler_services.db_postgres_services.steps import StepsGetAllUrlDataByke,StepsInsertBykeUrls
-from handler_services.data_byke_services.utils_bike_data import filter_links
+from handler_services.data_bike_services.data_file_info import DataBikeUrlsClass
+from handler_services.db_postgres_services.steps_db_queries import StepsGetAllUrlDataBike,StepsInsertBikeUrls
+from handler_services.data_bike_services.utils_bike_data import filter_links
 
 default_args={"owner": "benesh",
               'retries':2,
@@ -24,7 +24,6 @@ def task_init_db():
                              reader_file=FactoryReaderFile.YAML,
                              path_config=POSTGRES_MINIO_FILE,
                              attribut=POSTGRES_ATTRIBUT)
-    engine = db_instance.engine
     db_instance.init_database()
 
 def get_links_from_web(ti):
@@ -51,7 +50,7 @@ def get_urls_from_db(ti):
                              path_config=POSTGRES_MINIO_FILE,
                              attribut=POSTGRES_ATTRIBUT)
     engine = db_instance.engine
-    step_get_data = StepsGetAllUrlDataByke(engine)
+    step_get_data = StepsGetAllUrlDataBike(engine)
     data_byke_urls = step_get_data.run()
     list_json_dump = [url.model_dump_json() for url in data_byke_urls]
     ti.xcom_push(key='links_from_db', value=list_json_dump)
@@ -86,7 +85,7 @@ def insert_url_to_db(ti):
                                  path_config=POSTGRES_MINIO_FILE,
                                  attribut=POSTGRES_ATTRIBUT)
         engine = db_instance.engine
-        insert_data = StepsInsertBykeUrls(engine,data_to_db)
+        insert_data = StepsInsertBikeUrls(engine, data_to_db)
         insert_data.run()
 
 with DAG(
